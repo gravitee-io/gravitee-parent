@@ -1,3 +1,15 @@
+# [23.0.0](https://github.com/gravitee-io/gravitee-parent/compare/22.2.4...23.0.0) (2025-01-20)
+
+
+### Features
+
+* upgrade jdk version ([b022679](https://github.com/gravitee-io/gravitee-parent/commit/b0226792e9417791d30e9c2ae03682c3a406d6b0))
+
+
+### BREAKING CHANGES
+
+* jdk used for compilation needs to be upgrade to 21
+
 ## [22.2.4](https://github.com/gravitee-io/gravitee-parent/compare/22.2.3...22.2.4) (2024-12-07)
 
 
