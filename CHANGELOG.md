@@ -1,3 +1,10 @@
+## [22.2.5](https://github.com/gravitee-io/gravitee-parent/compare/22.2.4...22.2.5) (2025-01-27)
+
+
+### Bug Fixes
+
+* update license plugin configuration ([454d896](https://github.com/gravitee-io/gravitee-parent/commit/454d896cf1ee079c342922b313ce786f53c96922))
+
 ## [22.2.4](https://github.com/gravitee-io/gravitee-parent/compare/22.2.3...22.2.4) (2024-12-07)
 
 
