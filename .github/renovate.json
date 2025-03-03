@@ -1,18 +1,25 @@
 {
-  "extends": ["config:base"],
-  "rebaseWhen": "conflicted",
+  "extends": ["github>gravitee-io/renovate-config"],
   "packageRules": [
     {
-      "matchDatasources": ["orb"],
+      "matchBaseBranches": ["master"],
+      "matchPackagePatterns": [
+        "org.apache.maven.plugins:maven-assembly-plugin"
+      ],
+      "allowedVersions": "<=3.6.0",
       "automerge": true,
       "automergeType": "branch",
-      "semanticCommitType": "ci"
+      "semanticCommitType": "chore"
     },
     {
-      "matchDepTypes": ["build"],
+      "matchBaseBranches": ["22.x"],
+      "matchPackagePatterns": [
+        "org.apache.maven.plugins:maven-assembly-plugin"
+      ],
+      "allowedVersions": "<=3.6.0",
       "automerge": true,
       "automergeType": "branch",
-      "semanticCommitType": "fix"
+      "semanticCommitType": "chore"
     }
   ]
 }
