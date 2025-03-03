@@ -1,3 +1,10 @@
+# [22.3.0](https://github.com/gravitee-io/gravitee-parent/compare/22.2.5...22.3.0) (2025-03-03)
+
+
+### Features
+
+* force maven assembly plugin ([65aba4d](https://github.com/gravitee-io/gravitee-parent/commit/65aba4db022d8052844545e151f251d64db4e039))
+
 ## [22.2.5](https://github.com/gravitee-io/gravitee-parent/compare/22.2.4...22.2.5) (2025-01-27)
 
 
