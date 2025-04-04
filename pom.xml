@@ -22,7 +22,7 @@
 
     <groupId>io.gravitee</groupId>
     <artifactId>gravitee-parent</artifactId>
-    <version>23.1.0</version>
+    <version>23.2.0</version>
     <packaging>pom</packaging>
 
     <name>Gravitee.io APIM - Parent POM</name>
@@ -132,27 +132,45 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
-                    <configuration>
-                        <rules>
-                            <requireReleaseDeps>
-                                <message>No Snapshots Allowed!</message>
-                                <excludes>
-                                    <!-- Workaround to break cyclic dependencies in APIM between plugins and core APIM -->
-                                    <exclude>io.gravitee.*:*:*:*:test</exclude>
-                                    <exclude>io.gravitee.apim.*:*:*:*:provided</exclude>
-                                </excludes>
-                            </requireReleaseDeps>
-                            <requireReleaseVersion>
-                                <message>No Snapshots Allowed!</message>
-                            </requireReleaseVersion>
-                        </rules>
-                    </configuration>
                     <executions>
+                        <execution>
+                            <id>enforce-no-log4j</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <bannedDependencies>
+                                        <message>No log4j allowed</message>
+                                        <excludes>
+                                            <exclude>org.apache.logging.log4j</exclude>
+                                        </excludes>
+                                    </bannedDependencies>
+                                </rules>
+                            </configuration>
+                        </execution>
                         <execution>
                             <id>enforce-no-snapshots</id>
                             <goals>
                                 <goal>enforce</goal>
                             </goals>
+                            <configuration>
+                                <!-- will be activated only in release profiles-->
+                                <skip>true</skip>
+                                <rules>
+                                    <requireReleaseDeps>
+                                        <message>No Snapshots Allowed!</message>
+                                        <excludes>
+                                            <!-- Workaround to break cyclic dependencies in APIM between plugins and core APIM -->
+                                            <exclude>io.gravitee.*:*:*:*:test</exclude>
+                                            <exclude>io.gravitee.apim.*:*:*:*:provided</exclude>
+                                        </excludes>
+                                    </requireReleaseDeps>
+                                    <requireReleaseVersion>
+                                        <message>No Snapshots Allowed!</message>
+                                    </requireReleaseVersion>
+                                </rules>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -320,6 +338,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <executions>
@@ -361,6 +383,14 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <configuration>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
@@ -402,6 +432,14 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <configuration>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
