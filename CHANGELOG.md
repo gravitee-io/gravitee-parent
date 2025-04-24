@@ -1,3 +1,10 @@
+# [22.4.0](https://github.com/gravitee-io/gravitee-parent/compare/22.3.0...22.4.0) (2025-04-24)
+
+
+### Features
+
+* avoid log4j conflict by adding an enforce rule to ban log4j dependency ([61f1f18](https://github.com/gravitee-io/gravitee-parent/commit/61f1f1884931ff308082d7fd3c974304a94da6a7))
+
 # [22.3.0](https://github.com/gravitee-io/gravitee-parent/compare/22.2.5...22.3.0) (2025-03-03)
 
 
