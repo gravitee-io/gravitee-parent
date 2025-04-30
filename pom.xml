@@ -141,10 +141,16 @@
                             <configuration>
                                 <rules>
                                     <bannedDependencies>
-                                        <message>No log4j allowed</message>
+                                        <message>No log4j implementations allowed</message>
                                         <excludes>
                                             <exclude>org.apache.logging.log4j</exclude>
                                         </excludes>
+                                        <includes>
+                                            <!-- log4j-api can be used by some dependencies instead of slf4j-api -->
+                                            <!-- in order to work with logback, we need to allow it and also the bridge log4j to slf4j -->
+                                            <include>org.apache.logging.log4j:log4j-api</include>
+                                            <include>org.apache.logging.log4j:log4j-to-slf4j</include>
+                                        </includes>
                                     </bannedDependencies>
                                 </rules>
                             </configuration>
