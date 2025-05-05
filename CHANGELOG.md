@@ -1,3 +1,10 @@
+## [23.2.1](https://github.com/gravitee-io/gravitee-parent/compare/23.2.0...23.2.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* log4j rule in maven enforcer needs to allow two library to make it work with some dependencies ([2c168cf](https://github.com/gravitee-io/gravitee-parent/commit/2c168cf1c1107ea02fc17af38d1fef2cc5bd4652))
+
 # [23.2.0](https://github.com/gravitee-io/gravitee-parent/compare/23.1.0...23.2.0) (2025-04-24)
 
 
