@@ -1,3 +1,10 @@
+# [23.3.0](https://github.com/gravitee-io/gravitee-parent/compare/23.2.1...23.3.0) (2025-06-20)
+
+
+### Features
+
+* add notice.txt to license exclusion config ([b92c8be](https://github.com/gravitee-io/gravitee-parent/commit/b92c8be52d8dd571e63bb9d50f7184a08e33135c))
+
 ## [23.2.1](https://github.com/gravitee-io/gravitee-parent/compare/23.2.0...23.2.1) (2025-05-05)
 
 
