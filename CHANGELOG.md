@@ -1,3 +1,10 @@
+# [23.4.0](https://github.com/gravitee-io/gravitee-parent/compare/23.3.0...23.4.0) (2025-07-01)
+
+
+### Features
+
+* change deployment mechanism ([7b95376](https://github.com/gravitee-io/gravitee-parent/commit/7b9537689b0156618144d8b85cb494285a77aafd))
+
 # [23.3.0](https://github.com/gravitee-io/gravitee-parent/compare/23.2.1...23.3.0) (2025-06-20)
 
 
