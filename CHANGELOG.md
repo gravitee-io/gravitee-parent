@@ -1,3 +1,10 @@
+## [22.5.1](https://github.com/gravitee-io/gravitee-parent/compare/22.5.0...22.5.1) (2025-07-03)
+
+
+### Bug Fixes
+
+* add a deployment name for central sonatype ([4e360af](https://github.com/gravitee-io/gravitee-parent/commit/4e360af50b82cbfa1fec041d255d0db8758a07c7))
+
 # [22.5.0](https://github.com/gravitee-io/gravitee-parent/compare/22.4.1...22.5.0) (2025-07-01)
 
 
