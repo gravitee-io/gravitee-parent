@@ -1,3 +1,10 @@
+## [23.4.1](https://github.com/gravitee-io/gravitee-parent/compare/23.4.0...23.4.1) (2025-07-03)
+
+
+### Bug Fixes
+
+* add a deployment name for central sonatype ([35c4a2f](https://github.com/gravitee-io/gravitee-parent/commit/35c4a2fd347a6057930232658a7fcf59a38a624b))
+
 # [23.4.0](https://github.com/gravitee-io/gravitee-parent/compare/23.3.0...23.4.0) (2025-07-01)
 
 
