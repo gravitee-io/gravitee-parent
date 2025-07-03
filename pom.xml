@@ -252,6 +252,7 @@
                     <configuration>
                         <publishingServerId>sonatype-nexus-staging</publishingServerId>
                         <autoPublish>true</autoPublish>
+                        <deploymentName>${project.artifactId}:${project.version}</deploymentName>
                     </configuration>
                 </plugin>
                 <plugin>
