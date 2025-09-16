@@ -1,3 +1,10 @@
+# [23.5.0](https://github.com/gravitee-io/gravitee-parent/compare/23.4.1...23.5.0) (2025-09-16)
+
+
+### Features
+
+* update prettier-java to 2.7.5 ([d901ec3](https://github.com/gravitee-io/gravitee-parent/commit/d901ec3558e951c8ad0b16b155c2ec91ad376bb2))
+
 ## [23.4.1](https://github.com/gravitee-io/gravitee-parent/compare/23.4.0...23.4.1) (2025-07-03)
 
 
