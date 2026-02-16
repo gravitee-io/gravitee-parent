@@ -112,12 +112,47 @@
         <prettier-maven-plugin.prettierJavaVersion>2.7.5</prettier-maven-plugin.prettierJavaVersion>
         <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
         <skip.validation>false</skip.validation>
+        <gravitee.archrules.skip>false</gravitee.archrules.skip>
         <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
+        <gravitee-archrules-maven-plugin.version>1.0.0-alpha.1</gravitee-archrules-maven-plugin.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>io.gravitee.maven</groupId>
+                    <artifactId>gravitee-archrules-maven-plugin</artifactId>
+                    <version>${gravitee-archrules-maven-plugin.version}</version>
+                    <executions>
+                        <!-- Verify Slf4j's LoggerFactory is not used (directly or with @Slf4j) -->
+                        <execution>
+                            <id>global-logging-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>global-logging-check</goal>
+                            </goals>
+                            <configuration>
+                                <failOnError>true</failOnError>
+                                <allowListSuffixes>
+                                    <suffix>ConfigurationEvaluator</suffix>
+                                </allowListSuffixes>
+                            </configuration>
+                        </execution>
+
+                        <!-- Verify methods with access to an ExecutionContext log with `ctx.withLogger(log).info(...)` -->
+                        <execution>
+                            <id>execution-context-logging-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>execution-context-logging-check</goal>
+                            </goals>
+                            <configuration>
+                                <failOnError>true</failOnError>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -334,6 +369,13 @@
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>io.gravitee.maven</groupId>
+                <artifactId>gravitee-archrules-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${gravitee.archrules.skip}</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
