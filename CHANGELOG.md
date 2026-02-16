@@ -1,3 +1,15 @@
+# [24.0.0-alpha.1](https://github.com/gravitee-io/gravitee-parent/compare/23.5.0...24.0.0-alpha.1) (2026-02-16)
+
+
+### Features
+
+* use gravitee-archrules-maven-plugin for logging checks ([667c974](https://github.com/gravitee-io/gravitee-parent/commit/667c974be786232cbe88b2f4b76ed2e64fe2aca8))
+
+
+### BREAKING CHANGES
+
+* build fails if logger misuse. Smooth transition: -Dgravitee.archrules.skip=true
+
 # [23.5.0](https://github.com/gravitee-io/gravitee-parent/compare/23.4.1...23.5.0) (2025-09-16)
 
 
