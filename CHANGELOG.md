@@ -1,3 +1,10 @@
+# [24.0.0-alpha.2](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0-alpha.1...24.0.0-alpha.2) (2026-02-18)
+
+
+### Features
+
+* bump gravitee-archrules-maven-plugin version to 1.0.0-alpha.2 ([f16a563](https://github.com/gravitee-io/gravitee-parent/commit/f16a563ceed9290b671e4f6b194b89680145f8ce))
+
 # [24.0.0-alpha.1](https://github.com/gravitee-io/gravitee-parent/compare/23.5.0...24.0.0-alpha.1) (2026-02-16)
 
 
