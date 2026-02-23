@@ -134,9 +134,6 @@
                             </goals>
                             <configuration>
                                 <failOnError>true</failOnError>
-                                <allowListSuffixes>
-                                    <suffix>ConfigurationEvaluator</suffix>
-                                </allowListSuffixes>
                             </configuration>
                         </execution>
 
