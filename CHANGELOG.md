@@ -1,3 +1,10 @@
+# [24.0.0-alpha.3](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0-alpha.2...24.0.0-alpha.3) (2026-02-24)
+
+
+### Bug Fixes
+
+* archrules must not ignore ConditionEvaluator suffix ([eea6ae9](https://github.com/gravitee-io/gravitee-parent/commit/eea6ae9275d3fced5e6b314c72e7b7d957d4e8d0))
+
 # [24.0.0-alpha.2](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0-alpha.1...24.0.0-alpha.2) (2026-02-18)
 
 
