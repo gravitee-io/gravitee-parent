@@ -96,7 +96,7 @@
     <properties>
         <surefireArgLine></surefireArgLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <!-- Because of this issues.apache.org/jira/projects/MASSEMBLY/issues/MASSEMBLY-1031 we need to force the version to 3.6.0 -->
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
@@ -227,6 +227,7 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <proc>full</proc>
                     </configuration>
                 </plugin>
                 <plugin>
