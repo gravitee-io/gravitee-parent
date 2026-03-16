@@ -1,3 +1,21 @@
+# [24.0.0](https://github.com/gravitee-io/gravitee-parent/compare/23.5.0...24.0.0) (2026-03-16)
+
+
+### Bug Fixes
+
+* archrules must not ignore ConditionEvaluator suffix ([91a75f8](https://github.com/gravitee-io/gravitee-parent/commit/91a75f8d280b36be856c56d6a99f5efb446b4e50))
+
+
+### Features
+
+* bump gravitee-archrules-maven-plugin version to 1.0.0-alpha.2 ([eadb3c7](https://github.com/gravitee-io/gravitee-parent/commit/eadb3c79d7657c8ccbed72e7a5b42eb0032797cf))
+* use gravitee-archrules-maven-plugin for logging checks ([1413cdf](https://github.com/gravitee-io/gravitee-parent/commit/1413cdff3c07655c27f112acecd0b411aaaf6262))
+
+
+### BREAKING CHANGES
+
+* build fails if logger misuse. Smooth transition: -Dgravitee.archrules.skip=true
+
 # [23.5.0](https://github.com/gravitee-io/gravitee-parent/compare/23.4.1...23.5.0) (2025-09-16)
 
 
