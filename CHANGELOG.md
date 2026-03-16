@@ -1,3 +1,15 @@
+# [25.0.0-alpha.1](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0...25.0.0-alpha.1) (2026-03-16)
+
+
+### Features
+
+* **java:** upgrade to java 25, adds proc:full to address required changes to support annotation ([06e76c4](https://github.com/gravitee-io/gravitee-parent/commit/06e76c4fac985b176c6276172984c3d684108cf3))
+
+
+### BREAKING CHANGES
+
+* **java:** require java 25
+
 # [24.0.0](https://github.com/gravitee-io/gravitee-parent/compare/23.5.0...24.0.0) (2026-03-16)
 
 
