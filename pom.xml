@@ -114,7 +114,7 @@
         <skip.validation>false</skip.validation>
         <gravitee.archrules.skip>false</gravitee.archrules.skip>
         <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
-        <gravitee-archrules-maven-plugin.version>1.0.0-alpha.3</gravitee-archrules-maven-plugin.version>
+        <gravitee-archrules-maven-plugin.version>1.0.0-alpha.4</gravitee-archrules-maven-plugin.version>
     </properties>
 
     <build>
