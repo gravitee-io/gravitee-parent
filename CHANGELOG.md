@@ -1,3 +1,10 @@
+## [24.0.1](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0...24.0.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **deps:** update io.gravitee.maven:gravitee-archrules-maven-plugin to v1.0.0 ([0f62ad4](https://github.com/gravitee-io/gravitee-parent/commit/0f62ad4f3ef3d4328c35d9ebee38c38a1ee17c81))
+
 # [24.0.0](https://github.com/gravitee-io/gravitee-parent/compare/23.5.0...24.0.0) (2026-03-16)
 
 
