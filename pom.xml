@@ -202,6 +202,7 @@
                                             <!-- Workaround to break cyclic dependencies in APIM between plugins and core APIM -->
                                             <exclude>io.gravitee.*:*:*:*:test</exclude>
                                             <exclude>io.gravitee.apim.*:*:*:*:provided</exclude>
+                                            <exclude>io.gravitee.gamma.*:*:*:*</exclude>
                                         </excludes>
                                     </requireReleaseDeps>
                                     <requireReleaseVersion>
