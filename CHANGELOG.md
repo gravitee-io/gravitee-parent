@@ -1,3 +1,10 @@
+## [24.0.2](https://github.com/gravitee-io/gravitee-parent/compare/24.0.1...24.0.2) (2026-04-09)
+
+
+### Bug Fixes
+
+* exclude `io.gravitee.gamma` dependencies in release validation ([e3d6410](https://github.com/gravitee-io/gravitee-parent/commit/e3d6410a66ba1dad3a9ecc96e11716fac063fcc0))
+
 ## [24.0.1](https://github.com/gravitee-io/gravitee-parent/compare/24.0.0...24.0.1) (2026-04-03)
 
 
