@@ -1,3 +1,10 @@
+# [25.1.0](https://github.com/gravitee-io/gravitee-parent/compare/25.0.0...25.1.0) (2026-07-30)
+
+
+### Features
+
+* **deps:** update gravitee-archrules-maven-plugin to v2 ([1161ad3](https://github.com/gravitee-io/gravitee-parent/commit/1161ad3839aec7310174ff5717bdc96c26641c7d))
+
 # [25.0.0](https://github.com/gravitee-io/gravitee-parent/compare/24.0.2...25.0.0) (2026-06-17)
 
 
