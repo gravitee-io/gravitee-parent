@@ -108,8 +108,17 @@
         <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
         <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
         <license-maven-plugin.version>4.6</license-maven-plugin.version>
-        <prettier-maven-plugin.version>0.22</prettier-maven-plugin.version>
-        <prettier-maven-plugin.prettierJavaVersion>2.7.5</prettier-maven-plugin.prettierJavaVersion>
+        <spotless-maven-plugin.version>3.10.0</spotless-maven-plugin.version>
+        <frontend-maven-plugin.version>2.0.2</frontend-maven-plugin.version>
+        <node.version>v24.19.0</node.version>
+        <!-- npm packages used by the spotless prettier step, kept up to date by renovate -->
+        <prettier.version>3.9.6</prettier.version>
+        <prettier-plugin-java.version>2.10.3</prettier-plugin-java.version>
+        <prettier.printWidth>140</prettier.printWidth>
+        <prettier.tabWidth>4</prettier.tabWidth>
+        <!-- node and the npm cache live under ~/.m2 so that they survive `mvn clean` and are covered by the CI cache -->
+        <node.installDirectory>${user.home}/.m2/gravitee-node</node.installDirectory>
+        <spotless.npmInstallCache>${user.home}/.m2/spotless-npm-cache</spotless.npmInstallCache>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
         <skip.validation>false</skip.validation>
         <gravitee.archrules.skip>false</gravitee.archrules.skip>
@@ -341,22 +350,106 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>com.hubspot.maven.plugins</groupId>
-                    <artifactId>prettier-maven-plugin</artifactId>
-                    <version>${prettier-maven-plugin.version}</version>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
                     <configuration>
-                        <prettierJavaVersion>${prettier-maven-plugin.prettierJavaVersion}</prettierJavaVersion>
+                        <nodeVersion>${node.version}</nodeVersion>
+                        <installDirectory>${node.installDirectory}</installDirectory>
                         <skip>${skip.validation}</skip>
-                        <inputGlobs>
-                            <inputGlob>src/main/java/**/*.java</inputGlob>
-                            <inputGlob>src/test/java/**/*.java</inputGlob>
-                            <inputGlob>**/*.json</inputGlob>
-                            <inputGlob>**/*.yaml</inputGlob>
-                            <inputGlob>**/*.yml</inputGlob>
-                        </inputGlobs>
+                    </configuration>
+                    <executions>
+                        <!-- spotless needs a resolvable npm, and a directly invoked goal runs no phase,
+                             so node must be installed in the very phase spotless:check is bound to -->
+                        <execution>
+                            <id>install-node-and-npm</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless-maven-plugin.version}</version>
+                    <configuration>
+                        <skip>${skip.validation}</skip>
+                        <java>
+                            <!-- includes default to the project source and test source directories -->
+                            <excludes>
+                                <!-- spotless excludes the build directory using an absolute path,
+                                     which never matches during the relative-path scan -->
+                                <exclude>**/target/**</exclude>
+                                <exclude>**/node_modules/**</exclude>
+                            </excludes>
+                            <prettier>
+                                <npmExecutable>${node.installDirectory}/node/npm</npmExecutable>
+                                <npmInstallCache>${spotless.npmInstallCache}</npmInstallCache>
+                                <devDependencies>
+                                    <prettier>${prettier.version}</prettier>
+                                    <prettier-plugin-java>${prettier-plugin-java.version}</prettier-plugin-java>
+                                </devDependencies>
+                                <config>
+                                    <parser>java</parser>
+                                    <plugins>prettier-plugin-java</plugins>
+                                    <printWidth>${prettier.printWidth}</printWidth>
+                                    <tabWidth>${prettier.tabWidth}</tabWidth>
+                                </config>
+                            </prettier>
+                        </java>
+                        <json>
+                            <includes>
+                                <include>**/*.json</include>
+                            </includes>
+                            <excludes>
+                                <!-- spotless excludes the build directory using an absolute path,
+                                     which never matches during the relative-path scan -->
+                                <exclude>**/target/**</exclude>
+                                <exclude>**/node_modules/**</exclude>
+                            </excludes>
+                            <prettier>
+                                <npmExecutable>${node.installDirectory}/node/npm</npmExecutable>
+                                <npmInstallCache>${spotless.npmInstallCache}</npmInstallCache>
+                                <devDependencies>
+                                    <prettier>${prettier.version}</prettier>
+                                    <prettier-plugin-java>${prettier-plugin-java.version}</prettier-plugin-java>
+                                </devDependencies>
+                                <config>
+                                    <printWidth>${prettier.printWidth}</printWidth>
+                                    <tabWidth>${prettier.tabWidth}</tabWidth>
+                                </config>
+                            </prettier>
+                        </json>
+                        <yaml>
+                            <includes>
+                                <include>**/*.yaml</include>
+                                <include>**/*.yml</include>
+                            </includes>
+                            <excludes>
+                                <!-- spotless excludes the build directory using an absolute path,
+                                     which never matches during the relative-path scan -->
+                                <exclude>**/target/**</exclude>
+                                <exclude>**/node_modules/**</exclude>
+                            </excludes>
+                            <prettier>
+                                <npmExecutable>${node.installDirectory}/node/npm</npmExecutable>
+                                <npmInstallCache>${spotless.npmInstallCache}</npmInstallCache>
+                                <devDependencies>
+                                    <prettier>${prettier.version}</prettier>
+                                    <prettier-plugin-java>${prettier-plugin-java.version}</prettier-plugin-java>
+                                </devDependencies>
+                                <config>
+                                    <printWidth>${prettier.printWidth}</printWidth>
+                                    <tabWidth>${prettier.tabWidth}</tabWidth>
+                                </config>
+                            </prettier>
+                        </yaml>
                     </configuration>
                     <executions>
                         <execution>
+                            <id>spotless-check</id>
                             <phase>validate</phase>
                             <goals>
                                 <goal>check</goal>
@@ -407,9 +500,14 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- declared before spotless: plugins bound to the same phase run in declaration order -->
             <plugin>
-                <groupId>com.hubspot.maven.plugins</groupId>
-                <artifactId>prettier-maven-plugin</artifactId>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
         </plugins>
 
