@@ -522,6 +522,33 @@
 
     <profiles>
         <profile>
+            <!-- Reformat every source file: mvn -Pformat validate
+
+                 spotless:apply is bound to a phase rather than invoked directly, because a
+                 directly invoked goal runs no phase and would therefore not install node. -->
+            <id>format</id>
+            <properties>
+                <spotless.check.skip>true</spotless.check.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>spotless-apply</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>apply</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <!-- Profile used to release open source modules -->
             <id>gravitee-release</id>
             <activation>
