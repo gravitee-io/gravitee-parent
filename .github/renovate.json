@@ -16,6 +16,38 @@
             "automerge": true,
             "automergeType": "branch",
             "semanticCommitType": "chore"
+        },
+        {
+            "matchManagers": ["custom.regex"],
+            "matchPackageNames": ["prettier", "prettier-plugin-java", "node"],
+            "automerge": false,
+            "semanticCommitType": "chore"
+        }
+    ],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "description": "prettier, used by the spotless prettier step (invisible to the maven manager)",
+            "managerFilePatterns": ["/^pom\\.xml$/"],
+            "matchStrings": ["<prettier\\.version>(?<currentValue>.*?)</prettier\\.version>"],
+            "depNameTemplate": "prettier",
+            "datasourceTemplate": "npm"
+        },
+        {
+            "customType": "regex",
+            "description": "prettier-plugin-java, used by the spotless prettier step",
+            "managerFilePatterns": ["/^pom\\.xml$/"],
+            "matchStrings": ["<prettier-plugin-java\\.version>(?<currentValue>.*?)</prettier-plugin-java\\.version>"],
+            "depNameTemplate": "prettier-plugin-java",
+            "datasourceTemplate": "npm"
+        },
+        {
+            "customType": "regex",
+            "description": "node runtime installed by frontend-maven-plugin",
+            "managerFilePatterns": ["/^pom\\.xml$/"],
+            "matchStrings": ["<node\\.version>(?<currentValue>v.*?)</node\\.version>"],
+            "depNameTemplate": "node",
+            "datasourceTemplate": "node-version"
         }
     ]
 }
