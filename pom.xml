@@ -109,7 +109,9 @@
         <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
         <license-maven-plugin.version>4.6</license-maven-plugin.version>
         <prettier-maven-plugin.version>0.22</prettier-maven-plugin.version>
-        <prettier-maven-plugin.prettierJavaVersion>2.7.5</prettier-maven-plugin.prettierJavaVersion>
+        <!-- Keep <= 2.8.x: prettier-maven-plugin 0.22 hardcodes the plugin entry node_modules/prettier-plugin-java/dist/index.js,
+             but prettier-plugin-java 2.9.0+ (tree-sitter rewrite) renamed it to dist/index.mjs|cjs, breaking `mvn prettier:write`. -->
+        <prettier-maven-plugin.prettierJavaVersion>2.8.1</prettier-maven-plugin.prettierJavaVersion>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
         <skip.validation>false</skip.validation>
         <gravitee.archrules.skip>false</gravitee.archrules.skip>
