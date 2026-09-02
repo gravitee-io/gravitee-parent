@@ -111,6 +111,14 @@
         <prettier-maven-plugin.version>0.22</prettier-maven-plugin.version>
         <prettier-maven-plugin.prettierJavaVersion>2.7.5</prettier-maven-plugin.prettierJavaVersion>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+        <!--
+            The Central publishing plugin takes over the deploy phase from maven-deploy-plugin, so
+            maven.deploy.skip never reaches it. Binding its own switch to that property keeps a
+            single answer to "is this module published", while central.publishing.skip stays
+            available to a module that wants to opt out of Central alone.
+        -->
+        <maven.deploy.skip>false</maven.deploy.skip>
+        <central.publishing.skip>${maven.deploy.skip}</central.publishing.skip>
         <skip.validation>false</skip.validation>
         <gravitee.archrules.skip>false</gravitee.archrules.skip>
         <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
@@ -289,6 +297,7 @@
                         <publishingServerId>sonatype-nexus-staging</publishingServerId>
                         <autoPublish>true</autoPublish>
                         <deploymentName>${project.artifactId}:${project.version}</deploymentName>
+                        <skipPublishing>${central.publishing.skip}</skipPublishing>
                     </configuration>
                 </plugin>
                 <plugin>
