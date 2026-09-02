@@ -6,3 +6,191 @@ image:https://img.shields.io/badge/semantic--release-conventional%20commits-e100
 image:https://circleci.com/gh/gravitee-io/gravitee-parent.svg?style=svg["CircleCI", link="https://circleci.com/gh/gravitee-io/gravitee-parent"]
 image:https://f.hubspotusercontent40.net/hubfs/7600448/gravitee-github-button.jpg["Join the community forum", link="https://community.gravitee.io?utm_source=readme", height=20]
 endif::[]
+
+Common build settings for every Gravitee project: compiler level, validations, dependency rules and
+publishing. Inheriting from it means a project gets all of the below without declaring anything.
+
+This page documents what you inherit and what you can change from a project that declares:
+
+[source,xml]
+----
+<parent>
+    <groupId>io.gravitee</groupId>
+    <artifactId>gravitee-parent</artifactId>
+    <version>25.1.0</version>
+</parent>
+----
+
+== What runs by default
+
+These plugins are bound in every build, without any declaration on your side:
+
+|===
+| Plugin | Phase | What it does | Switch
+
+| `maven-enforcer-plugin`
+| `validate`
+| Bans log4j implementations; refuses snapshots during a release
+| see <<enforcer>>
+
+| `license-maven-plugin`
+| `validate`
+| Checks the Apache-2 header on sources
+| see <<license>>
+
+| `prettier-maven-plugin`
+| `validate`
+| Checks formatting of Java, JSON and YAML files
+| `skip.validation`
+
+| `gravitee-archrules-maven-plugin`
+| `verify`
+| Checks logging conventions (no direct `LoggerFactory`, `ctx.withLogger(log)` where a context exists)
+| `gravitee.archrules.skip`
+
+| `maven-compiler-plugin`
+| `compile`
+| Compiles with `source`/`target` = `java.version`, annotation processing set to `full`
+| `java.version`
+
+| `maven-surefire-plugin`
+| `test`
+| Runs `Test*.java`, `*Test.java`, `*TestCase.java` and `*Suite.java`
+| `surefireArgLine`
+
+| `maven-resources-plugin`
+| `process-resources`
+| Filters resources as UTF-8
+| —
+|===
+
+`os-maven-plugin` is registered as a build extension, so `${os.detected.classifier}` is available.
+
+== Java version
+
+`java.version` is `25`. It feeds `source` and `target` of the compiler plugin. A project that cannot
+move yet overrides the property:
+
+[source,xml]
+----
+<properties>
+    <java.version>21</java.version>
+</properties>
+----
+
+[[license]]
+== License header
+
+The check runs on every build and fails when a source file has no Apache-2 header. `LICENSE.txt`,
+`NOTICE.txt`, `**/README`, `**/*.adoc`, `src/main/resources/**`, `src/test/resources/**`,
+`src/main/packaging/**`, `src/main/webapp/**`, `node_modules/**`, `dist/**`, `.tmp/**` and dotfiles
+are already excluded.
+
+**A private project turns it off in its own POM:**
+
+[source,xml]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <configuration>
+                <skip>true</skip>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+----
+
+CAUTION: `-Dlicense.skip=true` has **no effect**. This POM configures `<skip>${skip.validation}</skip>`
+on the plugin, and a plugin `<configuration>` outranks the parameter's own user property. The same
+applies to any parameter this POM configures explicitly.
+
+`skip.validation` is the wider switch: it turns off the license check **and** the formatting check at
+once. Use it for a one-off build, not as a permanent setting for a private project — it also drops
+`prettier`.
+
+[[enforcer]]
+== Enforcer rules
+
+Two executions, both bound to `validate`, with different lifetimes:
+
+`enforce-no-log4j`:: **Always on.** Bans everything under `org.apache.logging.log4j`, except
+`log4j-api` (some dependencies use it instead of `slf4j-api`) and `log4j-to-slf4j` (the bridge to
+logback).
+
+`enforce-no-snapshots`:: **Release profiles only** — it carries `<skip>true</skip>` and both release
+profiles set it back to `false`. It then applies two rules: `requireReleaseVersion`, so a release
+cannot be cut from a `-SNAPSHOT` version, and `requireReleaseDeps`, so no dependency is a snapshot.
+Three exclusions break the cyclic dependencies between APIM and its plugins:
+`io.gravitee.*` in `test` scope, `io.gravitee.apim.*` in `provided` scope, and every
+`io.gravitee.gamma.*`.
+
+CAUTION: `requireReleaseDeps` inspects **dependencies**. A BOM imported with `<scope>import</scope>`
+is not one, so a snapshot BOM passes the check unnoticed and produces a release whose POM stops
+resolving once that snapshot is cleaned up. Pin the BOM to a released version yourself.
+
+== Publishing
+
+Two destinations, two switches, both defaulting to "publish":
+
+`maven.deploy.skip`:: Skips `maven-deploy-plugin` **and** Maven Central — the single answer to "this
+module is not published".
+`central.publishing.skip`:: Skips Maven Central only, leaving the internal deploy untouched. Defaults
+to `${maven.deploy.skip}`.
+
+|===
+| The module declares | Maven Central | `maven-deploy-plugin` lane
+
+| nothing | published | deployed
+| `maven.deploy.skip=true` | excluded | not deployed
+| `maven.deploy.skip=true` + `central.publishing.skip=false` | published | not deployed
+| `central.publishing.skip=true` | excluded | deployed
+|===
+
+Both are read per module, so an aggregator can opt out while a child opts back in.
+
+`-Dcentral.publishing.skip=true` on the command line silences the whole Central publication — the
+bundle is built and nothing is uploaded, which rehearses a release without publishing it.
+
+NOTE: `central-publishing-maven-plugin` is declared with `<extensions>true</extensions>`. When it is
+part of the build, it removes every `maven-deploy-plugin` execution from the model and takes over the
+`deploy` phase. That is why `maven.deploy.skip` alone cannot stop a Central publication, and why the
+two properties above exist.
+
+== Release profiles
+
+Both are activated by `performRelease=true`, and both set `enforce-no-snapshots` back on. They differ
+in where artifacts go:
+
+|===
+| Profile | Publishes to | Also activates
+
+| `gravitee-release`
+| Maven Central, through `central-publishing-maven-plugin`
+| GPG signing, `-sources`, `-javadoc`
+
+| `gio-release`
+| the repository configured by the project, through `maven-deploy-plugin`
+| GPG signing, `-sources`, `-javadoc`
+|===
+
+CAUTION: `-DperformRelease=true` activates **both** profiles, since they share that activation — which
+means Central publishing switches on even for an enterprise module. Select the one you want
+explicitly with `-P gravitee-release` or `-P gio-release`.
+
+== Property reference
+
+|===
+| Property | Default | Effect
+
+| `java.version` | `25` | Compiler `source` and `target`
+| `skip.validation` | `false` | Turns off the license and formatting checks
+| `gravitee.archrules.skip` | `false` | Turns off the architecture rules
+| `maven.deploy.skip` | `false` | Skips both publishing lanes
+| `central.publishing.skip` | `${maven.deploy.skip}` | Skips Maven Central only
+| `surefireArgLine` | empty | Extra JVM arguments for the test runs
+|===
+
+Plugin versions are exposed as `<plugin-name>.version` properties and can be overridden the same way.
