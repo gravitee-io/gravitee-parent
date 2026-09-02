@@ -1,3 +1,10 @@
+## [25.1.2](https://github.com/gravitee-io/gravitee-parent/compare/25.1.1...25.1.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* **release:** require an explicit profile to select the publishing lane ([5686b06](https://github.com/gravitee-io/gravitee-parent/commit/5686b06da6d2d4225b06a2741aca91e2b06c80a7))
+
 ## [25.1.1](https://github.com/gravitee-io/gravitee-parent/compare/25.1.0...25.1.1) (2026-09-02)
 
 
