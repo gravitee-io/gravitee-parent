@@ -433,14 +433,12 @@
 
     <profiles>
         <profile>
-            <!-- Profile used to release open source modules -->
+            <!--
+                Profile used to release open source modules. Selected explicitly with -P: sharing an
+                activation property with gio-release turned both on at once, which sent enterprise
+                modules to Maven Central.
+            -->
             <id>gravitee-release</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -475,15 +473,8 @@
             </build>
         </profile>
         <profile>
-            <!-- Profile used to release enterprise modules -->
+            <!-- Profile used to release enterprise modules. Selected explicitly with -P. -->
             <id>gio-release</id>
-
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
