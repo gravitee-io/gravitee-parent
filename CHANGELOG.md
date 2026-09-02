@@ -1,3 +1,10 @@
+## [25.1.1](https://github.com/gravitee-io/gravitee-parent/compare/25.1.0...25.1.1) (2026-09-02)
+
+
+### Bug Fixes
+
+* **publishing:** honour maven.deploy.skip on the Maven Central lane ([19ce65b](https://github.com/gravitee-io/gravitee-parent/commit/19ce65bc064cf475f9b7a2e60d88be3cc8152a26))
+
 # [25.1.0](https://github.com/gravitee-io/gravitee-parent/compare/25.0.0...25.1.0) (2026-07-30)
 
 
