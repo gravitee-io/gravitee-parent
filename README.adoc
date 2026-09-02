@@ -161,8 +161,8 @@ two properties above exist.
 
 == Release profiles
 
-Both are activated by `performRelease=true`, and both set `enforce-no-snapshots` back on. They differ
-in where artifacts go:
+Neither activates on its own: pick one with `-P`. Both set `enforce-no-snapshots` back on, and they
+differ in where artifacts go:
 
 |===
 | Profile | Publishes to | Also activates
@@ -175,10 +175,6 @@ in where artifacts go:
 | the repository configured by the project, through `maven-deploy-plugin`
 | GPG signing, `-sources`, `-javadoc`
 |===
-
-CAUTION: `-DperformRelease=true` activates **both** profiles, since they share that activation — which
-means Central publishing switches on even for an enterprise module. Select the one you want
-explicitly with `-P gravitee-release` or `-P gio-release`.
 
 == Property reference
 
